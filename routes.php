@@ -1,8 +1,16 @@
 <?php
 
+use App\Controllers\ArticleController;
 use App\Controllers\PublicController;
 use App\Router;
 
-Router::addRoute('/', [PublicController::class, 'index']);
+Router::get('/', [PublicController::class, 'index']);
 
-Router::addRoute('/us', [PublicController::class, 'us']);
+Router::get('/us', [PublicController::class, 'us']);
+
+Router::get('/technology', [PublicController::class, 'technology']);
+
+Router::get('/form', [PublicController::class, 'form']);
+Router::post('/answer', [PublicController::class, 'answer']);
+
+Router::get('/articles', [ArticleController::class, 'index']);
