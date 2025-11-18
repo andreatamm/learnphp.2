@@ -5,10 +5,12 @@ namespace App;
 use PDO;
 use PDOException;
 
-class DB{
+class DB
+{
     private $conn;
 
-    public function __construct(){
+    public function __construct()
+    {
         try {
             $this->conn = new PDO("sqlite:db.sqlite");
             // set the PDO error mode to exception
@@ -18,7 +20,8 @@ class DB{
         }
     }
 
-    public function all($table, $class) {
+    public function all($table, $class)
+    {
         $stmt = $this->conn->prepare("SELECT * FROM $table");
         $stmt->execute();
 
@@ -27,7 +30,8 @@ class DB{
         return $stmt->fetchAll();
     }
 
-    public function find($table, $class, $id) {
+    public function find($table, $class, $id)
+    {
         $stmt = $this->conn->prepare("SELECT * FROM $table WHERE id=$id");
         $stmt->execute();
 
@@ -36,25 +40,37 @@ class DB{
         return $stmt->fetch();
     }
 
-    public function insert($table, $fields) {
+    public function where($table, $class, $field, $value)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM $table WHERE $field='$value'");
+        $stmt->execute();
+
+        // set the resulting array to associative
+        $stmt->setFetchMode(PDO::FETCH_CLASS, $class);
+        return $stmt->fetchAll();
+    }
+
+    public function insert($table, $fields)
+    {
         $fieldNames = array_keys($fields);
         $fieldNamesText = implode(', ', $fieldNames);
         $fieldValuesText = implode("', '", $fields);
 
         $sql = "INSERT INTO $table ($fieldNamesText)
-                VALUES ('$fieldNamesText')";
+                VALUES ('$fieldValuesText')";
         // use exec() because no results are returned
 
-       $this->conn->exec($sql);
+        $this->conn->exec($sql);
     }
 
-    public function update($table, $fields, $id) {
+    public function update($table, $fields, $id)
+    {
         $updateText = '';
-        foreach($fields as $name=>$value){
+        foreach ($fields as $name => $value) {
             $updateText .= "$name='$value',";
         }
         $updateText = substr($updateText, 0, -1);
-        dump($updateText);
+
         $sql = "UPDATE $table SET $updateText WHERE id=$id";
 
         // Prepare statement
@@ -64,8 +80,9 @@ class DB{
         $stmt->execute();
     }
 
-    public function delete($table, $id) {
-         $sql = "DELETE FROM $table WHERE id=$id";
+    public function delete($table, $id)
+    {
+        $sql = "DELETE FROM $table WHERE id=$id";
 
         // use exec() because no results are returned
         $this->conn->exec($sql);

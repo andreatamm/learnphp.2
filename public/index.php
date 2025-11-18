@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 if (preg_match('/\.(?:png|jpg|jpeg|gif|css|js)$/', $_SERVER["REQUEST_URI"])) {
     return false;    // serve the requested resource as-is.
@@ -18,14 +19,14 @@ $router = new App\Router($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 $match = $router->match();
 if($match) {
     if(is_callable($match['action'])){
-    call_user_func($match['action']);
+        call_user_func($match['action']);
     } else if(is_array($match['action'])){
         $className = $match['action'][0];
         $controller = new $className();
-        $mathod = $match['action'][1];
-        $controller->$mathod();
+        $method = $match['action'][1];
+        $controller->$method();
     }
-
+    
 } else {
     echo '404 page not found';
 }

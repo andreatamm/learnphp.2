@@ -9,8 +9,6 @@ Router::get('/', [PublicController::class, 'index']);
 
 Router::get('/us', [PublicController::class, 'us']);
 
-Router::get('/technology', [PublicController::class, 'technology']);
-
 Router::get('/form', [PublicController::class, 'form']);
 Router::post('/answer', [PublicController::class, 'answer']);
 
@@ -23,3 +21,7 @@ Router::post('/articles/edit', [ArticleController::class, 'update']);
 Router::get('/articles/delete', [ArticleController::class, 'destroy']);
 
 Router::get('/register', [AuthController::class, 'registerForm']);
+Router::post('/register', [AuthController::class, 'register']);
+Router::get('/login', [AuthController::class, 'loginForm']);
+Router::post('/login', [AuthController::class, 'login']);
+Router::get('/logout', [AuthController::class, 'logout']);
