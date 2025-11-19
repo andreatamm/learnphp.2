@@ -28,7 +28,7 @@ class AuthController {
     public function login() {
         dump($_POST);
         $user = User::where('email', $_POST['email']);
-        // if(isset($user[0])) {
+           // if(isset($user[0])) {
         //     $user = $user[0];
         // } else {
         //     $user = null;

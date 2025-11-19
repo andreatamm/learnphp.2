@@ -9,6 +9,8 @@ Router::get('/', [PublicController::class, 'index']);
 
 Router::get('/us', [PublicController::class, 'us']);
 
+Router::get('/technology', [PublicController::class, 'technology']);
+
 Router::get('/form', [PublicController::class, 'form']);
 Router::post('/answer', [PublicController::class, 'answer']);
 

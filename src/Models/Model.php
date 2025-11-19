@@ -22,7 +22,6 @@ abstract class Model {
         return $db->where(static::$table, static::class, $field, $value);
     }
 
-
     public function save() {
         $db = new DB();
         $fields = get_object_vars($this);
@@ -34,7 +33,7 @@ abstract class Model {
         }
     }
 
-    public function delete(){
+    public function delete() {
         $db = new DB();
         $db->delete(static::$table, $this->id);
     }
